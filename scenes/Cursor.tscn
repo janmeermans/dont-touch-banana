@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cohuw7wiu4kap"]
+
+[ext_resource type="Texture2D" uid="uid://drmxboei3gyh1" path="res://assets/monkey_hand_cursor.png" id="1_tex"]
+
+[node name="Cursor" type="Node2D" unique_id=804979047]
+z_index = 100
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=322604550]
+texture = ExtResource("1_tex")
+offset = Vector2(2, 26)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1004635977]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D" unique_id=896918853]
+polygon = PackedVector2Array(14, 20, 12, 43, 8, 48, -6, 48, -9, 28, -13, 26, -14, 20, 1, 14, 1, 4, 4, 4, 10, 19)

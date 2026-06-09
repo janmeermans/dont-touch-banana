@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://rc0r63rjwbh2"]
+
+[ext_resource type="Texture2D" uid="uid://b38sdw65emv7h" path="res://assets/banana.png" id="1_tex"]
+[ext_resource type="Script" uid="uid://dkirwebxngoqo" path="res://scripts/Banana.gd" id="2_script"]
+
+[node name="Banana" type="RigidBody2D" unique_id=335466962]
+gravity_scale = 2.2
+linear_damp = 0.05
+angular_damp = 1.2
+script = ExtResource("2_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=866515718]
+scale = Vector2(0.84, 0.84)
+texture = ExtResource("1_tex")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2072840547]
+polygon = PackedVector2Array(16, -40, 10, -44, 8, -38, 10, -30, 8, -20, 6, -10, 2, 4, -6, 16, -22, 26, -30, 36, -28, 42, -16, 44, 0, 40, 16, 28, 26, 12, 30, -2, 30, -20, 20, -30)
+metadata/_edit_group_ = true
