@@ -35,13 +35,6 @@ jobs:
           godot --headless --path . --export-release "Windows Desktop" build/windows/DontTouchTheBanana.exe
           cd build && zip -r DontTouchTheBanana_Windows.zip windows/
 
-      - name: Export Linux
-        run: |
-          mkdir -p build/linux
-          godot --headless --path . --export-release "Linux" build/linux/DontTouchTheBanana.x86_64
-          chmod +x build/linux/DontTouchTheBanana.x86_64
-          cd build && zip -r DontTouchTheBanana_Linux.zip linux/
-
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -51,13 +44,6 @@ jobs:
 
             **Play in browser:** https://janmeermans.github.io/dont-touch-banana/
 
-            ### Downloads
-            | Platform | Instructions |
-            |----------|-------------|
-            | **Windows** | Extract the zip, run `DontTouchTheBanana.exe` |
-            | **Linux** | Extract the zip, run `DontTouchTheBanana.x86_64` |
-
-            > No Godot installation needed — the game engine is bundled inside.
-          files: |
-            build/DontTouchTheBanana_Windows.zip
-            build/DontTouchTheBanana_Linux.zip
+            ### Download
+            Extract the zip and run `DontTouchTheBanana.exe` — no Godot installation needed.
+          files: build/DontTouchTheBanana_Windows.zip
