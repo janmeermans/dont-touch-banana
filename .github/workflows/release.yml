@@ -1,0 +1,63 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  export-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Godot 4.6.2
+        run: |
+          wget -q "https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_linux.x86_64.zip"
+          unzip -q Godot_v4.6.2-stable_linux.x86_64.zip
+          chmod +x Godot_v4.6.2-stable_linux.x86_64
+          mv Godot_v4.6.2-stable_linux.x86_64 /usr/local/bin/godot
+
+      - name: Install export templates
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates/4.6.2.stable
+          wget -q "https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_export_templates.tpz"
+          unzip -q Godot_v4.6.2-stable_export_templates.tpz
+          mv templates/* ~/.local/share/godot/export_templates/4.6.2.stable/
+
+      - name: Export Windows
+        run: |
+          mkdir -p build/windows
+          godot --headless --path . --export-release "Windows Desktop" build/windows/DontTouchTheBanana.exe
+          cd build && zip -r DontTouchTheBanana_Windows.zip windows/
+
+      - name: Export Linux
+        run: |
+          mkdir -p build/linux
+          godot --headless --path . --export-release "Linux" build/linux/DontTouchTheBanana.x86_64
+          chmod +x build/linux/DontTouchTheBanana.x86_64
+          cd build && zip -r DontTouchTheBanana_Linux.zip linux/
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Don't Touch The Banana ${{ github.ref_name }}"
+          body: |
+            ## Don't Touch The Banana ${{ github.ref_name }} 🍌
+
+            **Play in browser:** https://janmeermans.github.io/dont-touch-banana/
+
+            ### Downloads
+            | Platform | Instructions |
+            |----------|-------------|
+            | **Windows** | Extract the zip, run `DontTouchTheBanana.exe` |
+            | **Linux** | Extract the zip, run `DontTouchTheBanana.x86_64` |
+
+            > No Godot installation needed — the game engine is bundled inside.
+          files: |
+            build/DontTouchTheBanana_Windows.zip
+            build/DontTouchTheBanana_Linux.zip
